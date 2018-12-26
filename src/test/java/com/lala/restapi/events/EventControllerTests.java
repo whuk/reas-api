@@ -3,8 +3,10 @@ package com.lala.restapi.events;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -27,6 +29,9 @@ public class EventControllerTests {
     @Autowired
     ObjectMapper objectMapper;
 
+    @MockBean
+    EventRepository eventRepository;
+
     @Test
     public void createEvent() throws Exception {
         Event event = Event.builder().name("Spring")
@@ -36,10 +41,13 @@ public class EventControllerTests {
                 .beginEventDateTime(LocalDateTime.of(2018, 12, 23, 23, 00))
                 .endEventDateTime(LocalDateTime.of(2018, 12, 23, 23, 59))
                 .basePrice(100)
-                .maxPirce(200)
+                .maxPrice(200)
                 .limitOfEnrollment(100)
                 .location("D2 Factory")
                 .build();
+
+        event.setId(10);
+        Mockito.when(eventRepository.save(event)).thenReturn(event);
 
         mockMvc.perform(post("/api/events")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
