@@ -10,7 +10,7 @@ public class EventTest {
     public void builder() {
         Event event = Event.builder()
                 .name("rest api")
-                .descroption("rest api description")
+                .description("rest api description")
                 .build();
         assertThat(event).isNotNull();
     }
@@ -24,10 +24,10 @@ public class EventTest {
         // When
         Event event = new Event();
         event.setName(name);
-        event.setDescroption(description);
+        event.setDescription(description);
 
         // Then
         assertThat(event.getName()).isEqualTo(name);
-        assertThat(event.getDescroption()).isEqualTo(description);
+        assertThat(event.getDescription()).isEqualTo(description);
     }
 }
