@@ -1,0 +1,17 @@
+# docker run
+docker run --name postgres_rest -p 5432:5432 -e POSTGRES_PASSWORD=pass -d postgres
+
+# go to docker
+docker exec -it postgres_rest bash
+
+# switch user postgres
+su - postgres
+
+# connect db
+psql -d postgres -U postgres
+
+# database list
+\l
+
+# table list
+\dt
