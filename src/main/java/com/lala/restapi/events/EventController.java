@@ -1,5 +1,6 @@
 package com.lala.restapi.events;
 
+import com.lala.restapi.common.ErrorsResource;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
@@ -36,13 +37,13 @@ public class EventController {
     public ResponseEntity createEvent(@RequestBody @Valid EventDto eventDto, Errors errors) {
         // 들어온 값체크
         if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(errors);
+            return getResponseEntity(errors);
         }
 
         // 값의 유효성 체크
         eventValidator.validate(eventDto, errors);
         if (errors.hasErrors()) {
-            return ResponseEntity.badRequest().body(errors);
+            return getResponseEntity(errors);
         }
 
         Event event = modelMapper.map(eventDto, Event.class);
@@ -53,7 +54,11 @@ public class EventController {
         EventResource eventResource = new EventResource(event);
         eventResource.add(linkTo(EventController.class).withRel("query-events"));
         eventResource.add(selfLinkBuilder.withRel("update-event"));
-        eventResource.add(new Link("docs/index.html#resources-events-create").withRel("profile"));
+        eventResource.add(new Link("docs/com.lala.restapi.index.html#resources-events-create").withRel("profile"));
         return ResponseEntity.created(createdUri).body(eventResource);
+    }
+
+    private ResponseEntity getResponseEntity(Errors errors) {
+        return ResponseEntity.badRequest().body(new ErrorsResource(errors));
     }
 }

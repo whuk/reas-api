@@ -81,18 +81,18 @@ include::{snippets}/errors/http-response.adoc[]
 [[resources]]
 = 리소스
 
-[[resources-index]]
+[[resources-com.lala.restapi.index]]
 == 인덱스
 
 인덱스는 서비스 진입점을 제공한다.
 
 
-[[resources-index-access]]
+[[resources-com.lala.restapi.index-access]]
 === 인덱스 조회
 
 `GET` 요청을 사용하여 인덱스에 접근할 수 있다.
 
-operation::index[snippets='response-body,http-response,links']
+operation::com.lala.restapi.index[snippets='response-body,http-response,links']
 
 [[resources-events]]
 == 이벤트
