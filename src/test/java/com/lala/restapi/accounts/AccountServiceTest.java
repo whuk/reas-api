@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -43,5 +44,11 @@ public class AccountServiceTest {
         // Then
         assertThat(userDetails.getPassword()).isEqualTo(password);
         assertThat(userDetails.getUsername()).isEqualTo(username);
+    }
+
+    @Test(expected = UsernameNotFoundException.class)
+    public void findByUsernameFail() {
+        String username = "ryan@email.com";
+        accountService.loadUserByUsername(username);
     }
 }
