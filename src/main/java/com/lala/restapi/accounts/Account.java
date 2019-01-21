@@ -11,7 +11,7 @@ import java.util.Set;
 public class Account {
 
     @Id @GeneratedValue
-    private String id;
+    private Integer id;
 
     private String email;
 
